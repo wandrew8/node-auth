@@ -4,13 +4,12 @@ import  fastifyStatic from 'fastify-static'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { connectDb } from './db.js'
+import { registerUser } from './accounts/register.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 const app = fastify();
-
-console.log(process.env.MONGO_URL)
 
 async function startApp() {
     try {
@@ -18,8 +17,13 @@ async function startApp() {
             root: path.join(__dirname, "public")
         })
 
-        app.post("/api/register", {}, (req, res) => {
-            console.log("Request", req)
+        app.post("/api/register", {}, async (req, res) => {
+            try {
+                const { email, password } = req.body
+                registerUser(email, password)
+            } catch (e) {
+                console.log(e)
+            }
         })
         
         await app.listen(3000)
