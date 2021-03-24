@@ -22,7 +22,7 @@ async function startApp() {
             try {
                 const { email, password } = req.body
                 const userId = await registerUser(email, password)
-                console.log(userId)
+                console.log(email, password)
             } catch (e) {
                 console.log(e)
             }
@@ -32,7 +32,7 @@ async function startApp() {
             try {
                 const { email, password } = req.body
                 const userId = await authorizeUser(email, password)
-                console.log(userId)
+                console.log(email, password)
             } catch (e) {
                 console.log(e)
             }

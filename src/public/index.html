@@ -8,15 +8,16 @@
 </head>
 <body>
     <h1>Hello World</h1>
-    <h3>Register Form</h3>
+    <h3>Create a New Account</h3>
     <form id="register-form">
         <input type="email" placeholder="Your email..." name="email">
         <input type="password" placeholder="Your password..." name="password">
-        <button type="submit">Sign Up</button>
+        <button type="submit">Create Account</button>
     </form>
     <br/>
     <hr/>
     <br/>
+    <h3>Sign In</h3>
     <form id="login-form">
         <input type="email" placeholder="Your email..." name="email">
         <input type="password" placeholder="Your password..." name="password">
@@ -25,17 +26,37 @@
 
     <script>
         (() => {
-            const form = document.getElementById("register-form")
-            form.addEventListener("submit", async (e) => {
+            const registerForm = document.getElementById("register-form")
+            registerForm.addEventListener("submit", async (e) => {
                 e.preventDefault();
                 try {
-                    const values = Object.values(form).reduce((object, field) => {
+                    const values = Object.values(registerForm).reduce((object, field) => {
                         if(field.name) {
                             object[field.name] = field.value
                         }
                         return object
                     }, {})
+                    console.log(values)
                     const result = await fetch('/api/register', {
+                        method: "POST",
+                        body: JSON.stringify(values),
+                        headers: { "Content-type": "application/json; charset=UTF-8"},
+                    })
+                } catch(e) {
+                    console.log(e)
+                }
+            })
+            const loginForm = document.getElementById("login-form")
+            loginForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                try {
+                    const values = Object.values(loginForm).reduce((object, field) => {
+                        if(field.name) {
+                            object[field.name] = field.value
+                        }
+                        return object
+                    }, {})
+                    const result = await fetch('/api/authorize', {
                         method: "POST",
                         body: JSON.stringify(values),
                         headers: { "Content-type": "application/json; charset=UTF-8"},

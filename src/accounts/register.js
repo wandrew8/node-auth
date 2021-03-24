@@ -3,7 +3,6 @@ const { genSalt, hash } = bcrypt
 
 export async function registerUser(email, password) {
     const { user } = await import("../user/user.js")
-    console.log(user)
     //generate salt
     const salt = await genSalt(10);
 
