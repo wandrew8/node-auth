@@ -33,6 +33,8 @@ async function startApp() {
                 const { email, password } = req.body
                 const userId = await authorizeUser(email, password)
                 console.log(email, password)
+                //Generate auth token
+                //Generate cookies via HTTP using JWT
             } catch (e) {
                 console.log(e)
             }
